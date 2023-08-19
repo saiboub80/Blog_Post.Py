@@ -139,7 +139,7 @@ def register():
         )
         new_user = User(
             email=form.email.data,
-            name=form.name.data,
+            name=form.name.data,   
             password=hash_and_salted_password,
         )
         db.session.add(new_user)
@@ -271,10 +271,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
-
-
-
-
-
-
+    app.run(debug=True, port=5005)
