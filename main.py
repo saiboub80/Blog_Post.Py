@@ -50,6 +50,28 @@ with app.app_context():
 
 
 @app.route('/')
+def home():
+    return render_template('index.html', login_in=current_user.is_authenticated)
+
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        new_user = User(
+            email=request.form.get('email'),
+            name=request.form.get('name'),
+            password=request.form.get('password')
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return render_template("secrets.html")
+
+    return render_template("register.html")
+
+
+@app.route('/')
 def get_all_posts():
     result= db.session.execute(db.select(BlogPost))
     posts= result.scalars().all()
