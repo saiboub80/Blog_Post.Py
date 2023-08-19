@@ -1,18 +1,20 @@
-from flask import Flask, render_template,redirect, url_for
-from flask_bootstrap5 import Bootstrap
-from flask_sqlalchmy import SQLAlchemy
+from flask import Flask, render_template, redirect, url_for
+from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField ,Submitfield
-from wtforms.validations import DataRequired, URL
-from flask_crediton import Ckeditor ,CKeditorField
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, URL
+from flask_ckeditor import CKEditor, CKEditorField
 from datetime import date
 
 
 
 
+
 app = Flask(__name__)
-app.config[SECRET_KEY]= '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-Bootstrap(app)
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+ckeditor = CKEditor(app)
+Bootstrap5(app)
 
 
 ###CONNECT TO DB ####
@@ -24,13 +26,13 @@ db.init_app(app)
 #####Configure Table
 
 class BlogPost(db.Model):
-    id= db.column(db.Integer,primary_key=True)
-    title=db.column(db.String(250),unique=True, nullable=False)
-    subtitle=db.column(db.String(250),nullable=False)
-    date = db.column(db.String(250), nullable=False)
-    body = db.column(db.Text, nullable=False)
-    author=db.column(db.String(250),nullable=False)
-    img_url=db.column(db.String(250),nullable=False)
+    id= db.Column(db.Integer,primary_key=True)
+    title=db.Column(db.String(250),unique=True, nullable=False)
+    subtitle=db.Column(db.String(250),nullable=False)
+    date = db.Column(db.String(250), nullable=False)
+    body = db.Column(db.Text, nullable=False)
+    author=db.Column(db.String(250),nullable=False)
+    img_url=db.Column(db.String(250),nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -46,12 +48,55 @@ def get_all_posts():
 def Show_post(post_id):
     requested_post= db.get_or_404(BlogPost,post_id)
     return render_template('post.html',post=requested_post)
-@app.route('/edit-post/<post_id>', method=["GET","POST"])
-def edit_post():
+
+
+@app.route('/new-post', methods=['GET','POST'])
+def add_new_posrt():
+    form= CreatePostForm()
+    if form.validate_on_submit():
+        new_post = BlogPost(
+            title= form.title.data,
+            subtitle = form.subtitle.data,
+            body=form.body.data,
+            img_url = form.img_url.data,
+            author =form.author.data,
+            date=date.today().strftime('%B,%d,%Y')
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('get_all_posts'))
+    return render_template('make-posr.htm')
+
+@app.route('/edit-post/<post_id>', methods=["GET","POST"])
+def edit_post(post_id):
     post=db.get_or_404(BlogPost, post_id)
-    edit_form=createPostForm()
+    edit_form= createPostForm(
+        title = post.title,
+        subtitle =post.subtitle,
+        body=post.body,
+        img_url = post.img_url,
+        author = post.author,
+    )
+
+    if edit_form.validate_on_submit():
+        post.title = edit_form.title.data,
+        post.subtitle = edit_form.subtitle.data,
+        post.img_url = edit_form.img_url.data
+        post.author = edit_form.author.data
+        post.body = edit_form.body.data
+        db.session.commit()
+        return redirect(url_for('show_post',post_id= post.id))
+    return render_template('make_post.html',form=edit_form,is_edit=True)
+
+
     return render_template('make-post', form=edit_form,is_edit=True)
 
+@app.route('/delete/<int:post_id>')
+def delete_post(post_id):
+    post_delete=db.get_or_404(BlogPost,post_id)
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    return render_template(url_for('get_all_posts'))
 
 @app.route("/about")
 def about():
