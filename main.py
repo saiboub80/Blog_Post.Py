@@ -46,6 +46,11 @@ def get_all_posts():
 def Show_post(post_id):
     requested_post= db.get_or_404(BlogPost,post_id)
     return render_template('post.html',post=requested_post)
+@app.route('/edit-post/<post_id>', method=["GET","POST"])
+def edit_post():
+    post=db.get_or_404(BlogPost, post_id)
+    edit_form=createPostForm()
+    return render_template('make-post', form=edit_form,is_edit=True)
 
 
 @app.route("/about")

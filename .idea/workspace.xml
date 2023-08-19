@@ -5,30 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034916d3-12cd-461d-b091-a661e39bb1b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/make-post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/about-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/angela-profile.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/contact-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/default-profile.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/edit-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/home-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/login-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/post-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/assets/img/register-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/make_post.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/navbar.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/post.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
