@@ -1,4 +1,6 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -12,7 +14,7 @@ from datetime import date
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = 'secret-key-goes-here'
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -22,17 +24,26 @@ app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///posts.db'
 db= SQLAlchemy()
 db.init_app(app)
 
+login_manager=LoginMager()
+login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    return db.get_or_404(user,user_id)
+
+
+
+
+
 
 #####Configure Table
 
-class BlogPost(db.Model):
-    id= db.Column(db.Integer,primary_key=True)
-    title=db.Column(db.String(250),unique=True, nullable=False)
-    subtitle=db.Column(db.String(250),nullable=False)
-    date = db.Column(db.String(250), nullable=False)
-    body = db.Column(db.Text, nullable=False)
-    author=db.Column(db.String(250),nullable=False)
-    img_url=db.Column(db.String(250),nullable=False)
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(1000))
+
 
 with app.app_context():
     db.create_all()
