@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-
+# Added use Twilio message send login
+# added forget password using STMP, and
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 
@@ -117,7 +118,6 @@ def register():
         result = db.session.execute(db.select(User).where(User.email == form.email.data))
         user = result.scalar()
         if user:
-            # User already exists
             flash("You've already signed up with that email, log in instead!")
             return redirect(url_for('login'))
 
@@ -133,7 +133,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        # This line will authenticate the user with Flask-Login
+        # authenticate the user with Flask-Login
         login_user(new_user)
         return redirect(url_for("get_all_posts"))
     return render_template("register.html", form=form, current_user=current_user)
